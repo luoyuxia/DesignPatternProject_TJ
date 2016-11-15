@@ -1,0 +1,12 @@
+﻿  observerTest.cpp
+f:\vs2015project\observer\observer\clock.h(91): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+f:\vs2015project\observer\observer\clock.h(148): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+f:\vs2015project\observer\observer\clock.h(154): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+f:\vs2015project\observer\observer\clock.h(168): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+f:\vs2015project\observer\observer\clock.h(174): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+f:\vs2015project\observer\observer\clock.h(181): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+f:\vs2015project\observer\observer\clock.h(187): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+f:\vs2015project\observer\observer\clock.h(196): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+f:\vs2015project\observer\observer\clock.h(202): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+  Observer.vcxproj -> F:\VS2015Project\Observer\x64\Debug\Observer.exe
+  Observer.vcxproj -> F:\VS2015Project\Observer\x64\Debug\Observer.pdb (Full PDB)
