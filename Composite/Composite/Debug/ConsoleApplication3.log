@@ -1,0 +1,4 @@
+﻿  Composite.cpp
+f:\vs2015project\consoleapplication3\consoleapplication3\directory.h(128): warning C4018: “<=”: 有符号/无符号不匹配
+  ConsoleApplication3.vcxproj -> F:\VS2015Project\ConsoleApplication3\Debug\Composite.exe
+  ConsoleApplication3.vcxproj -> F:\VS2015Project\ConsoleApplication3\Debug\Composite.pdb (Full PDB)
