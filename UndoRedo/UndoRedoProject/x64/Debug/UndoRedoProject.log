@@ -1,0 +1,5 @@
+﻿  UnDoReDo.cpp
+f:\vs2015project\undoredo\undoredoproject\UndoRedoComponent.h(185): error C2504: “UndoableEditListener”: 未定义基类
+f:\vs2015project\undoredo\undoredoproject\UndoRedoComponent.h(196): error C2027: 使用了未定义类型“UndoableEditEvent”
+  f:\vs2015project\undoredo\undoredoproject\UndoRedoComponent.h(11): note: 参见“UndoableEditEvent”的声明
+f:\vs2015project\undoredo\undoredoproject\UndoRedoComponent.h(196): error C2227: “->getUndoableEdit”的左边必须指向类/结构/联合/泛型类型
