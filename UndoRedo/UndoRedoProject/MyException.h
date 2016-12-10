@@ -5,6 +5,8 @@
 #include<iostream>
 using namespace std;
 using namespace System::Windows::Forms;
+
+//自定义的异常
 class MyException
 {
 public:
@@ -27,9 +29,10 @@ MyException::~MyException()
 string MyException::printException()
 {
 	return errorMessage;
-	//	cout << errorMessage;
 }
 
+
+//不能进行Undo的异常
 class CannotUndoException :public MyException
 {
 public:
@@ -40,6 +43,8 @@ private:
 
 };
 
+
+//不能进行Redo的异常
 class CannotRedoException :public MyException
 {
 public:
@@ -59,6 +64,8 @@ CannotRedoException::~CannotRedoException()
 {
 }
 
+
+//不能添加编辑操作的异常
 class CannotAddEditException :public MyException
 {
 public:

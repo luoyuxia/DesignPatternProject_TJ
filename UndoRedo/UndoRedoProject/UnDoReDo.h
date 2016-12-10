@@ -41,6 +41,7 @@ namespace UndoRedoProject {
 		}
 	private: System::Windows::Forms::PictureBox^  drawMap;
 
+	//画线的准备操作，初始化画布，画笔
 	private:Point orignalPoint;
 	private:Point aimPoint;
 	private:Point processPoint;
@@ -51,10 +52,13 @@ namespace UndoRedoProject {
 	private:Pen^ earsePen;
 	private:UndoRedoEditSupport* editSupport;
 	private:UndoManager* undoManager;
+	//存储当前画布所有的线
 	private:vector<MyLine*>*lines;
-//	private:vector<pair<Point, Point>*>*lines;
-	private: System::Windows::Forms::Button^  undo;
-	private: System::Windows::Forms::Button^  redo;
+	private: System::Windows::Forms::Button^  undoButton;
+	private: System::Windows::Forms::Button^  redoButton;
+			 //	private:vector<pair<Point, Point>*>*lines;
+
+
 	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^  undoStrip;
 	private: System::Windows::Forms::ToolStripMenuItem^  redoStrip;
@@ -86,8 +90,8 @@ namespace UndoRedoProject {
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->undoStrip = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->redoStrip = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->undo = (gcnew System::Windows::Forms::Button());
-			this->redo = (gcnew System::Windows::Forms::Button());
+			this->undoButton = (gcnew System::Windows::Forms::Button());
+			this->redoButton = (gcnew System::Windows::Forms::Button());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->编辑ToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->undoItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -100,9 +104,9 @@ namespace UndoRedoProject {
 			// drawMap
 			// 
 			this->drawMap->ContextMenuStrip = this->contextMenuStrip1;
-			this->drawMap->Location = System::Drawing::Point(-9, 31);
+			this->drawMap->Location = System::Drawing::Point(0, 31);
 			this->drawMap->Name = L"drawMap";
-			this->drawMap->Size = System::Drawing::Size(1246, 389);
+			this->drawMap->Size = System::Drawing::Size(1278, 445);
 			this->drawMap->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->drawMap->TabIndex = 0;
 			this->drawMap->TabStop = false;
@@ -138,25 +142,25 @@ namespace UndoRedoProject {
 			this->redoStrip->Text = L"重做";
 			this->redoStrip->Click += gcnew System::EventHandler(this, &UnDoReDo::redoStrip_Click);
 			// 
-			// undo
+			// undoButton
 			// 
-			this->undo->Location = System::Drawing::Point(130, 426);
-			this->undo->Name = L"undo";
-			this->undo->Size = System::Drawing::Size(95, 38);
-			this->undo->TabIndex = 2;
-			this->undo->Text = L"撤销";
-			this->undo->UseVisualStyleBackColor = true;
-			this->undo->Click += gcnew System::EventHandler(this, &UnDoReDo::undo_Click);
+			this->undoButton->Location = System::Drawing::Point(12, 482);
+			this->undoButton->Name = L"undoButton";
+			this->undoButton->Size = System::Drawing::Size(95, 38);
+			this->undoButton->TabIndex = 2;
+			this->undoButton->Text = L"撤销";
+			this->undoButton->UseVisualStyleBackColor = true;
+			this->undoButton->Click += gcnew System::EventHandler(this, &UnDoReDo::undo_Click);
 			// 
-			// redo
+			// redoButton
 			// 
-			this->redo->Location = System::Drawing::Point(274, 429);
-			this->redo->Name = L"redo";
-			this->redo->Size = System::Drawing::Size(107, 35);
-			this->redo->TabIndex = 3;
-			this->redo->Text = L"重做";
-			this->redo->UseVisualStyleBackColor = true;
-			this->redo->Click += gcnew System::EventHandler(this, &UnDoReDo::redo_Click);
+			this->redoButton->Location = System::Drawing::Point(125, 484);
+			this->redoButton->Name = L"redoButton";
+			this->redoButton->Size = System::Drawing::Size(107, 35);
+			this->redoButton->TabIndex = 3;
+			this->redoButton->Text = L"重做";
+			this->redoButton->UseVisualStyleBackColor = true;
+			this->redoButton->Click += gcnew System::EventHandler(this, &UnDoReDo::redo_Click);
 			// 
 			// menuStrip1
 			// 
@@ -164,7 +168,7 @@ namespace UndoRedoProject {
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->编辑ToolStripMenuItem });
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(1237, 28);
+			this->menuStrip1->Size = System::Drawing::Size(1281, 28);
 			this->menuStrip1->TabIndex = 4;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -199,13 +203,14 @@ namespace UndoRedoProject {
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoScroll = true;
-			this->ClientSize = System::Drawing::Size(1237, 470);
-			this->Controls->Add(this->redo);
-			this->Controls->Add(this->undo);
+			this->ClientSize = System::Drawing::Size(1281, 529);
+			this->Controls->Add(this->redoButton);
+			this->Controls->Add(this->undoButton);
 			this->Controls->Add(this->drawMap);
 			this->Controls->Add(this->menuStrip1);
 			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"UnDoReDo";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"UnDoReDo";
 			this->Load += gcnew System::EventHandler(this, &UnDoReDo::UnDoReDo_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->drawMap))->EndInit();
@@ -221,22 +226,47 @@ namespace UndoRedoProject {
 	private: System::Void UnDoReDo_Load(System::Object^  sender, System::EventArgs^  e) {
 		editSupport = new UndoRedoEditSupport();
 		undoManager = new UndoManager();
+		//添加监听者
 		editSupport->addUndoableEditListener(undoManager);
 		lines = new vector<MyLine*>();
 
-		pen = gcnew Pen(Color::Red, 0.5);
+
+		//初始画布，画笔，按钮信息
+		pen = gcnew Pen(Color::Black , 0.5);
 		earsePen = gcnew Pen(drawMap->BackColor,1);
 		bitmap = gcnew Bitmap(drawMap->Width, drawMap->Height);
 		drawMap->Image = bitmap;
 		g = Graphics::FromImage(bitmap);
-		
+		setCanRedo();
+		setCanUndo();
 		
 	}
+
+
+	//判断当前的状态下是否可以Redo
+	private: void setCanRedo()
+	{
+		redoButton->Enabled = undoManager->canRedo();
+		redoItem->Enabled = undoManager->canRedo();
+		redoStrip->Enabled = undoManager->canRedo();
+	}
+
+	//判断当前的状态下是否可以Undo
+	private:void setCanUndo()
+	{
+		undoButton->Enabled = undoManager->canUndo();
+		undoItem->Enabled = undoManager->canUndo();
+		undoStrip->Enabled = undoManager->canUndo();
+	}
+
+	//鼠标在画布上点击后触发的事件
 	private: System::Void drawMap_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 		orignalPoint = e->Location;
 		processPoint = e->Location;
 		mouseIsDown = true;
 	}
+    
+	//鼠标在画布上移动后触发的事件
 	private: System::Void drawMap_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 		if (mouseIsDown == false) return;
 		Graphics^ g = getGraphics();
@@ -244,18 +274,16 @@ namespace UndoRedoProject {
 		g->DrawLine(pen, orignalPoint, e->Location);
 		processPoint = e->Location;
 	}
+			 //鼠标在画布上松开按钮触发的事件
 	private: System::Void drawMap_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 			mouseIsDown = false;
 			MyLine* line = new MyLine(new MyPoint(orignalPoint.X, orignalPoint.Y),new MyPoint(e->Location.X,e->Location.Y));
-		//	MyLine1* line = new MyLine1(orignalPoint, e->Location);
-		//	MyLine1 line(Point(orignalPoint.X, orignalPoint.Y), Point(e->Location.X, e->Location.Y));
-	//		pair<Point, Point>line(orignalPoint, e->Location);
-	//		editSupport->postEdit(new DrawLineEdit(lines, pair<Point, Point>(orignalPoint, e->Location)));
-		//	editSupport->postEdit(new DrawLineEdit(lines, new MyLine1(orignalPoint,e->Location)));
+			
+			//将一个画线的编辑操作发送给监听者
 			editSupport->postEdit(new DrawLineEdit(lines, line));
+			setCanUndo();
+			setCanRedo();
 	
-	}
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
 
 	private:Graphics^ getGraphics()
@@ -264,29 +292,10 @@ namespace UndoRedoProject {
 		drawMap->Image = bitmap;
 		return Graphics::FromImage(bitmap);
 	}
-/*
-	public:void earseLine(MyLine1 line)
-	{
-		Graphics^ g = getGraphics();
-		g->DrawLine(earsePen,line.getStartPoint(), line.getEndPoint());
-	}
-
-	public:void drawLine(MyLine1 line)
-	{
-		Graphics^ g = getGraphics();
-		g->DrawLine(pen,line.getStartPoint(), line.getEndPoint());
-
-	}
-	*/
 	private:void clearDrawMap()
 	{
-	//	Bitmap^ newBitmap2 = gcnew Bitmap(drawMap->Width, drawMap->Height);
-	//	drawMap->Image = newBitmap2;
-	//	delete bitmap;
-	//	bitmap = newBitmap2;
 		Graphics^ g = getGraphics();
 		g->Clear(drawMap->BackColor);
-
 	}
 
 	private:void redraw()
@@ -300,13 +309,15 @@ namespace UndoRedoProject {
 				Point((*iter)->getEndPoint()->getX(),(*iter)->getEndPoint()->getY()));
 		}
 	}
-
+			//撤销操作
 	private:void myUndo()
 	{
 		try
 		{
 			undoManager->undo();
 			redraw();
+			setCanRedo();
+			setCanUndo();
 		}
 		catch (MyException* e)
 		{
@@ -315,12 +326,15 @@ namespace UndoRedoProject {
 			MessageBox::Show(s);
 		}
 	}
+			//重做操作
 	private:void myRedo()
 	{
 		try
 		{
 			undoManager->redo();
 			redraw();
+			setCanRedo();
+			setCanUndo();
 		}
 		catch (MyException* e)
 		{
@@ -329,6 +343,10 @@ namespace UndoRedoProject {
 			MessageBox::Show(s);
 		}
 	}
+
+
+
+//处理redo，undo的点击操作
 private: System::Void undo_Click(System::Object^  sender, System::EventArgs^  e) {
 	myUndo();
 }

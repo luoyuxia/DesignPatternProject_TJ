@@ -2,6 +2,8 @@
 #ifndef MYPOINT
 #define MYPOINT
 using namespace System::Drawing;
+
+//自定义的点
 class MyPoint
 {
 public :
@@ -23,6 +25,8 @@ private:
 	int _y;
 };
 
+
+//自定义的线
 class MyLine
 {
 public:

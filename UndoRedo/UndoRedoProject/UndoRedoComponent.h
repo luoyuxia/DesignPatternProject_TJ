@@ -8,6 +8,8 @@
 #include"MyException.h"
 using namespace std;
 
+
+//抽象的UndoableEdit编辑操作，提供了几个纯虚函数，让子类实现
 public class UndoableEdit
 {
 public:
@@ -53,6 +55,8 @@ string UndoableEdit::getRedoPresentationName()
 }
 
 
+//继承自UndoableEdit类，实现了其全部的纯虚函数，自己定义的
+//可以UndoRedo类只需继承该类就可以了
 public class AbstractUndoableEdit :public UndoableEdit
 {
 public:
@@ -93,6 +97,7 @@ inline void AbstractUndoableEdit::redo()
 	hasBeenDone = true;
 }
 
+//由于是单个编辑操作，在向该当编辑操作中添加操作时将抛出异常
 inline void AbstractUndoableEdit::addEdit(UndoableEdit * undoableEdit)
 {
 	throw new CannotAddEditException();
@@ -113,6 +118,8 @@ inline bool AbstractUndoableEdit::canRedo()
 	return hasBeenDone == false;
 }
 
+
+//复合编辑操作，由多个编辑操作组成
 class CompoundEdit :public AbstractUndoableEdit
 {
 public:
@@ -136,6 +143,8 @@ CompoundEdit::CompoundEdit(string compoundEditName) :AbstractUndoableEdit(compou
 CompoundEdit::~CompoundEdit()
 {
 }
+
+//对该复合编辑操作中的每一个操作，都进行Undo操作
 inline void CompoundEdit::undo()
 {
 	vector<UndoableEdit*>::iterator iter = undoableEdits.begin();
@@ -144,6 +153,8 @@ inline void CompoundEdit::undo()
 		(*iter)->undo();
 	}
 }
+
+//对该复合编辑操作中的每一个操作，都进行Redo操作
 inline void CompoundEdit::redo()
 {
 	vector<UndoableEdit*>::iterator iter = undoableEdits.begin();
@@ -152,11 +163,14 @@ inline void CompoundEdit::redo()
 		(*iter)->redo();
 	}
 }
+
+//添加单个编辑操作
 inline void CompoundEdit::addEdit(UndoableEdit * undoableEdit)
 {
 	undoableEdits.push_back(undoableEdit);
 }
 
+//如果该复合操作其中有任何一个编辑操作可以Undo，则该复合操作都可以Undo
 inline bool CompoundEdit::canUndo()
 {
 	vector<UndoableEdit*>::iterator iter = undoableEdits.begin();
@@ -168,6 +182,7 @@ inline bool CompoundEdit::canUndo()
 	return false;
 }
 
+//如果该复合操作其中有任何一个编辑操作可以Redo，则该复合操作都可以Redo
 inline bool CompoundEdit::canRedo()
 {
 	vector<UndoableEdit*>::iterator iter = undoableEdits.begin();
@@ -182,6 +197,8 @@ inline bool CompoundEdit::canRedo()
 
 class UndoableEditListener;
 class UndoableEditEvent;
+
+//管理UndoRedo操作的类，继承CompoundEdit， UndoableEditListener以监听UndoableEditEvent
 class UndoManager :public CompoundEdit, public UndoableEditListener
 {
 public:
@@ -199,7 +216,7 @@ public:
 	virtual bool canRedo();
 private:
 	int limit = LIMIT;
-	int indexOfNextAdd = 0;
+	int indexOfNextAdd = 0;//类似于指针，指向容器当前的位置
 protected:
 	UndoableEdit* editToBeUndone();
 	UndoableEdit* editToBeRedone();
@@ -227,6 +244,8 @@ inline void UndoManager::discardAllEdits()
 	indexOfNextAdd = 0;
 	undoableEdits.clear();
 }
+
+//从容器的当前指针指向的操作，到某一个编辑操作都进行Undo
 inline void UndoManager::undoTo(UndoableEdit * edit)
 {
 	vector<UndoableEdit*>::iterator iter = undoableEdits.begin() + indexOfNextAdd - 1;
@@ -241,6 +260,8 @@ inline void UndoManager::undoTo(UndoableEdit * edit)
 	}
 
 }
+
+//从容器当前指针指向的操作，到某一个编辑操作都进行Redo
 inline void UndoManager::redoTo(UndoableEdit * edit)
 {
 	vector<UndoableEdit*>::iterator iter = undoableEdits.begin() + indexOfNextAdd;
@@ -263,7 +284,7 @@ inline void UndoManager::undo()
 	if (edit == NULL)
 		throw new CannotUndoException();
 
-	//从最后一个元素到第一个可以被Undo的edit都Undo掉
+	//从容器当前指针指向的元素到第一个可以被Undo的edit都Undo掉
 	undoTo(edit);
 
 
@@ -275,38 +296,36 @@ inline void UndoManager::redo()
 	//如果为空，表示不存在可以被Redo的edit
 	if (edit == NULL)
 		throw new CannotRedoException();
+	//从容器当前指针指向的元素到第一个可以被Redo的edit都Redo掉
 	redoTo(edit);
 
 }
+
+//在容器当前指针指向的位置添加一个编辑操作
 inline void UndoManager::addEdit(UndoableEdit * undoableEdit)
 {
 	if (indexOfNextAdd >= limit)
 		throw new UndoOverFlowException();
 
-	//将IndexOfNextAdd后面的元素全部擦除
+	//将容器当前指针指向位置的后面的元素全部擦除
 	undoableEdits.erase(undoableEdits.begin() + indexOfNextAdd, undoableEdits.end());
 	indexOfNextAdd++;
-	/*	//如果edit应添加的位置索引大于或edit列表的大小，用push函数
-	if (indexOfNextAdd >= undoableEdits.size())
-	{
-	undoableEdits.push_back(undoableEdit);
-	indexOfNextAdd++;
-	}
-	//否则，直接通过索引添加，因为已经有这样的空间了
-	else
-	{
-	undoableEdits[indexOfNextAdd++] = undoableEdit;
-	}*/
 	undoableEdits.push_back(undoableEdit);
 }
+
+//如果能找到可以被Undo的操作，则表示可以Undo
 inline bool UndoManager::canUndo()
 {
 	return editToBeUndone() != NULL;
 }
+
+//如果能找到可以被Redo的操作，则表示可以Redo
 inline bool UndoManager::canRedo()
 {
 	return editToBeRedone() != NULL;
 }
+
+//从容器当前指针指向的操作，找到第一个能够被Undo的edit（操作）
 inline UndoableEdit * UndoManager::editToBeUndone()
 {
 	//从容器的最后一个元素开始遍历
@@ -324,6 +343,8 @@ inline UndoableEdit * UndoManager::editToBeUndone()
 	}
 	return NULL;
 }
+
+//从容器当前指针指向的操作，找到第一个能够被Redo的edit（操作）
 inline UndoableEdit * UndoManager::editToBeRedone()
 {
 	//从容器的最后一个元素开始遍历

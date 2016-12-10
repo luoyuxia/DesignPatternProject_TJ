@@ -138,7 +138,6 @@
   <ItemGroup>
     <ClInclude Include="DrawLineEdit.h" />
     <ClInclude Include="MyException.h" />
-    <ClInclude Include="MyLine.h" />
     <ClInclude Include="MyPoint.h" />
     <ClInclude Include="UndoableEditEvent.h" />
     <ClInclude Include="UndoableEditSupport.h" />
