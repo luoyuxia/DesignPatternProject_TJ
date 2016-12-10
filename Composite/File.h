@@ -14,6 +14,7 @@ public:
 	virtual int getSize();
 	virtual string getType();
 	virtual void printList(string prefix);
+	virtual Entry* clone() { return new File(_name, _size); }
 private:
 	string _name;
 	int _size;

@@ -13,14 +13,14 @@ public:
 	virtual int getSize();
 	virtual string getName();
 	virtual void add(Entry* entry);
-	virtual void deleteEntry(Entry* entry);
+	virtual Entry* deleteEntry(string entryname);
 	virtual void printList(string prefix);
 	virtual string getType();
 	virtual bool isDir() { return true; };
 	File* findFileByPath(string path,string separator="/");
 	Directory* findDirByPath(string path, string separator = "/");
 	vector<string> splitString(string s, string separator);
-
+	virtual Entry* clone();
 private:
 	string _name;
 	vector<Entry*> entries;
@@ -37,6 +37,16 @@ Directory::Directory(string name) :_name(name)
 }
 Directory::~Directory()
 {
+}
+
+Entry* Directory::clone()
+{
+	Directory* dir = new Directory(_name);
+	for (int i = 0; i < entries.size(); i++)
+	{
+		dir->add(entries[i]->clone());
+	}
+	return dir;
 }
 inline int Directory::getSize()
 {
@@ -68,18 +78,23 @@ inline void Directory::add(Entry * entry)
 }
 
 //删除目录或文件
-inline void Directory::deleteEntry(Entry * entry)
+inline Entry* Directory::deleteEntry(string entryname)
 {
 	vector<Entry*>::iterator iter = entries.begin();
 	for (; iter != entries.end(); iter++)
 	{
-		if ((*iter)->getName() == entry->getName())
+		if ((*iter)->getName() == entryname)
 		{
 			break;
 		}
 	}
+	Entry* entry = NULL;
 	if (iter != entries.end())
+	{
+		entry = (*iter)->clone();
 		entries.erase(iter, iter + 1);
+	}
+	return entry;
 }
 
 //输出文件或目录信息

@@ -23,7 +23,7 @@ public:
 	AddEntryCommand(Entry* root, Entry* added) :_root_entry(root), _added_entry(added) {}
 	~AddEntryCommand() {};
 	virtual void excute() { _root_entry->add(_added_entry); }
-	virtual void unexcute() { _root_entry->deleteEntry(_added_entry); }
+	virtual void unexcute() { _root_entry->deleteEntry(_added_entry->getName()); }
 private:
 	Entry* _root_entry;
 	Entry* _added_entry;
@@ -32,13 +32,14 @@ private:
 class DeleteEntryCommand :public Command
 {
 public:
-	DeleteEntryCommand(Entry* root, Entry* deleteed) :_root_entry(root), _delete_entry(deleteed) {};
+	DeleteEntryCommand(Entry* root, string deletename) :_root_entry(root), _deleteEntryname(deletename) {};
 	~DeleteEntryCommand() {};
-	virtual void excute() { _root_entry->deleteEntry(_delete_entry); }
+	virtual void excute() {_delete_entry = _root_entry->deleteEntry(_deleteEntryname); }
 	virtual void unexcute() { _root_entry->add(_delete_entry); }
 private:
 	Entry* _root_entry;
 	Entry* _delete_entry;
+	string _deleteEntryname;
 };
 
 //根据相对路径进行跳转

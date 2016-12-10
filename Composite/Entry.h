@@ -15,12 +15,13 @@ public:
 	virtual string getName();
 	virtual int getSize();
 	virtual void add(Entry* entry);
-	virtual void deleteEntry(Entry* entry);
+	virtual Entry* deleteEntry(string entryname);
 	virtual string getType();
-	virtual bool isDir() {return false;}
+	virtual bool isDir() { return false; }
 	void print();
 	string tostring();
 	virtual void printList(string prefix);
+	virtual Entry* clone() { return NULL; }
 private:
 
 };
@@ -56,7 +57,7 @@ inline void Entry::add(Entry* entry)
 {
 	throw EnTryException("错误!无法添加文件!\n");
 }
-inline void Entry::deleteEntry(Entry * entry)
+inline Entry* Entry::deleteEntry(string entryname)
 {
 	throw EnTryException("错误!无法删除文件!\n");
 }

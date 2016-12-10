@@ -42,7 +42,7 @@ return new AddEntryCommand(root, new Directory(dirName));
 
 Command * CommandFactory::createDeleteEntryCommand(Entry * root, string entryName)
 {
-return new DeleteEntryCommand(root, new File(entryName));
+return new DeleteEntryCommand(root, entryName);
 }
 
 Command * CommandFactory::createGotoDirCommand(Entry *& root,string& current, string path)

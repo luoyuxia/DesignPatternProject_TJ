@@ -1,4 +1,5 @@
 ﻿  Composite.cpp
-c:\users\qi\documents\github\designpatternprojecttj\composite\directory.h(137): warning C4018: “<=”: 有符号/无符号不匹配
+c:\users\qi\documents\github\designpatternprojecttj\composite\directory.h(45): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\qi\documents\github\designpatternprojecttj\composite\directory.h(152): warning C4018: “<=”: 有符号/无符号不匹配
   ConsoleApplication3.vcxproj -> C:\Users\qi\Documents\GitHub\DesignPatternProjectTJ\Composite\Debug\Composite.exe
   ConsoleApplication3.vcxproj -> C:\Users\qi\Documents\GitHub\DesignPatternProjectTJ\Composite\Debug\Composite.pdb (Full PDB)
