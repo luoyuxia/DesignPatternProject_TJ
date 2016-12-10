@@ -1,0 +1,6 @@
+﻿  Composite.cpp
+c:\users\qi\documents\github\designpatternprojecttj\composite\composite\directory.h(124): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\qi\documents\github\designpatternprojecttj\composite\composite\filesystemmanager.h(102): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\qi\documents\github\designpatternprojecttj\composite\composite\filesystemmanager.h(126): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  ConsoleApplication3.vcxproj -> C:\Users\qi\Documents\GitHub\DesignPatternProjectTJ\Composite\Composite\x64\Debug\Composite.exe
+  ConsoleApplication3.vcxproj -> C:\Users\qi\Documents\GitHub\DesignPatternProjectTJ\Composite\Composite\x64\Debug\Composite.pdb (Full PDB)

@@ -37,6 +37,7 @@ public:
 	const bool ignoreCaseEqual(const char* s1,const char* s2) const{ return _strcmpi(s1, s2) == 0; }
 	void redoCommand();
 	void undoCommand();
+	void printHelpInfo();
 	string getPath() { return currentPath; }
 private:
 	Entry* root;
@@ -69,6 +70,10 @@ void FileSystemManager::doCommand(string commandLine)
 		undoCommand();//撤销操作
 	else if (ignoreCaseEqual(commandLine.c_str(), "redo"))
 		redoCommand();//重做操作
+	else if(ignoreCaseEqual(commandLine.c_str(),"help"))
+	{
+		printHelpInfo();
+	}
 	else //执行对应命令
 	{
 		Command* cmd = getCommand(commandLine);
@@ -76,10 +81,21 @@ void FileSystemManager::doCommand(string commandLine)
 	}
 } 
 
+void FileSystemManager::printHelpInfo()
+{
+	cout << "********************help******************\n";
+	cout << "cd     从当前目录进入某个目录             \n";
+	cout << "ls     列出当前目录下的所有项的信息       \n";
+	cout << "home   相对于根目录进入某个目录           \n";
+	cout << "mkdir  在当前目录下创建一个目录           \n";
+	cout << "mkfile 在当前目录下创建一个文件           \n";
+	cout << "del	删除某个文件或目录				   \n";
+	cout << "********************help******************\n\n\n";
+}
 //根据命令行生成命令
 Command * FileSystemManager::getCommand(string commandLine)
 {
-	if (ignoreCaseEqual(commandLine.c_str(), "list"))
+	if (ignoreCaseEqual(commandLine.c_str(), "ls"))
 	{
 		return cmdFactory.createListAllCommand(currentEntry);
 	}
@@ -119,7 +135,7 @@ Command * FileSystemManager::getCommand(string commandLine)
 	}
 
 	//如果是跳转到某目录
-	if (ignoreCaseEqual(realCommand.c_str(), "goto"))
+	if (ignoreCaseEqual(realCommand.c_str(), "cd"))
 	{
 		if (parameters == "")throw EnTryException("无效的指令！");
 		Command* cmd = cmdFactory.createGotoDirCommand(currentEntry, currentPath, parameters);
