@@ -1,4 +1,2 @@
 ﻿  UnDoReDo.cpp
-  UnDoReDo.obj :托管的代码存在时 /DEBUG:FASTLINK 不受支持；正在重新启动与 /DEBUG:FULL 的链接
-  UndoRedoProject.vcxproj -> C:\Users\qi\Documents\GitHub\DesignPatternProjectTJ\UndoRedo\Debug\UndoRedoProject.exe
-  UndoRedoProject.vcxproj -> C:\Users\qi\Documents\GitHub\DesignPatternProjectTJ\UndoRedo\Debug\UndoRedoProject.pdb (Partial PDB)
+LINK : fatal error LNK1104: 无法打开文件“C:\Users\qi\Documents\GitHub\DesignPatternProjectTJ\UndoRedo\Debug\UndoRedoProject.exe”
